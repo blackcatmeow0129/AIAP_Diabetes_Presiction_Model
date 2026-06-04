@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Predictions - 비침습 당뇨 위험도 예측</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #fcfcfd; /* 깨끗하고 부드러운 화이트 톤 */
+            color: #1a1f27;
+        }
+        /* 입력창 포커스 및 토스 스타일 핑크 커스텀 */
+        .pink-input:focus {
+            outline: none;
+            border-color: #ff4d7d; /* 러블리/신뢰감을 주는 분홍색 */
+            box-shadow: 0 0 0 3px rgba(255, 77, 125, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <nav class="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-xl font-bold tracking-tight text-gray-900 flex items-center">
+                    diabetes<span class="text-[#ff4d7d] font-light ml-1">predictions</span>
+                </span>
+            </div>
+            <span class="text-xs text-[#ff4d7d] font-medium bg-[#fff0f3] px-3 py-1 rounded-full">Non-Invasive Model v2.0</span>
+        </div>
+    </nav>
+
+    <main class="max-w-xl mx-auto w-full px-6 py-10 flex-grow">
+        
+        <div class="mb-10">
+            <div class="inline-block text-xs font-semibold text-[#ff4d7d] bg-[#fff0f3] px-3 py-1 rounded-md mb-3">
+                채혈 없는 간편한 예측
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 tracking-tight leading-snug">
+                주요 신체 지표만으로<br>
+                <span class="text-[#ff4d7d]">당뇨 발병 가능성</span>을 확인하세요.
+            </h1>
+            <p class="text-gray-500 mt-2 text-sm">
+                혈당과 인슐린 검사 없이, 일상적인 신체 데이터만을 분석하는 AI 규제 모델입니다.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100 mb-6">
+            <form id="predictForm" class="space-y-5">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1.5">임신 횟수 (Pregnancies)</label>
+                        <input type="number" id="Pregnancies" min="0" value="1" required
+                            class="pink-input w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl px-4 py-3 transition-all text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1.5">이완기 혈압 (BloodPressure)</label>
+                        <input type="number" id="BloodPressure" min="0" value="72" required
+                            class="pink-input w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl px-4 py-3 transition-all text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1.5">삼두근 피부 두께 (SkinThickness)</label>
+                        <input type="number" id="SkinThickness" min="0" value="23" required
+                            class="pink-input w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl px-4 py-3 transition-all text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1.5">체질량지수 (BMI)</label>
+                        <input type="number" id="BMI" step="0.1" min="0" value="32.0" required
+                            class="pink-input w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl px-4 py-3 transition-all text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1.5">당뇨 가족력 지수 (Pedigree)</label>
+                        <input type="number" id="DiabetesPedigreeFunction" step="0.001" min="0" value="0.375" required
+                            class="pink-input w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl px-4 py-3 transition-all text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1.5">나이 (Age)</label>
+                        <input type="number" id="Age" min="0" value="26" required
+                            class="pink-input w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl px-4 py-3 transition-all text-sm">
+                    </div>
+                </div>
+
+                <button type="button" onclick="runVersion2Prediction()"
+                    class="w-full bg-[#ff4d7d] hover:bg-[#e03a66] text-white font-medium py-4 rounded-xl transition-all duration-200 cursor-pointer text-center block mt-4 shadow-lg shadow-pink-500/10">
+                    비침습 진단 시작하기
+                </button>
+            </form>
+        </div>
+
+        <div id="resultCard" class="hidden bg-white rounded-3xl p-6 border border-gray-100 shadow-xl transition-all duration-300">
+            <div class="flex items-center space-x-3 mb-4">
+                <div id="statusDot" class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                <span class="text-xs font-semibold tracking-wide text-gray-400 uppercase">AI Non-Invasive 결과</span>
+            </div>
+            
+            <div class="space-y-2">
+                <div class="text-2xl font-bold text-gray-900">
+                    예측된 당뇨 위험도는 <span id="probabilityText" class="text-[#ff4d7d]">0.0%</span> 입니다.
+                </div>
+                <p id="interpretationText" class="text-sm text-gray-500 leading-relaxed pt-2 border-t border-gray-100 mt-2">
+                    지표 요약 해석 공간입니다.
+                </p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100">
+                <span class="text-xs font-medium text-gray-400 block mb-2">💡 AIAP_final4 신규 비침습 파생 변수 계산 결과</span>
+                <div class="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div class="text-gray-400 text-[11px] mb-0.5">비만 × 연령 지표 (BMI_Age_Product)</div>
+                        <span id="outBmiAge" class="font-bold font-mono text-gray-900"></span>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div class="text-gray-400 text-[11px] mb-0.5">임신 대비 연령비 (Preg_Age_Ratio)</div>
+                        <span id="outPregAge" class="font-bold font-mono text-gray-900"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-gray-100 bg-white py-6 text-center text-xs text-gray-400">
+        <div class="max-w-4xl mx-auto">
+            © 2026 Diabetes Predictions V2. 기반 분석 코드 및 비침습 파생 변수 출처: AIAP_final4.ipynb
+        </div>
+    </footer>
+
+    <script>
+        function runVersion2Prediction() {
+            // 1. 데이터 로드 (Glucose와 Insulin 제거 상태)
+            const preg = parseFloat(document.getElementById('Pregnancies').value) || 0;
+            const bp = parseFloat(document.getElementById('BloodPressure').value) || 0;
+            const thickness = parseFloat(document.getElementById('SkinThickness').value) || 0;
+            const bmi = parseFloat(document.getElementById('BMI').value) || 0;
+            const pedigree = parseFloat(document.getElementById('DiabetesPedigreeFunction').value) || 0;
+            const age = parseFloat(document.getElementById('Age').value) || 0;
+
+            // 2. AIAP_final4.ipynb 핵심 파생 변수 공식 적용
+            const bmiAgeProduct = bmi * age;
+            const pregnanciesAgeRatio = preg / (age + 1e-5);
+
+            // 실시간 변환 디버그 결과 맵핑
+            document.getElementById('outBmiAge').innerText = bmiAgeProduct.toFixed(1);
+            document.getElementById('outPregAge').innerText = pregnanciesAgeRatio.toFixed(4);
+
+            // 3. 비침습 특화형 로지스틱 가중치 시뮬레이션 계산
+            // 채혈 피처(혈당)가 제외되었으므로, BMI와 나이, 가계도 및 새로 생성된 파생 변수들의 기여도가 정밀 조정됩니다.
+            let logOdds = -4.2; // 비침습 기준 기본 편향치 수정
+            logOdds += preg * 0.08;
+            logOdds += (bp - 72) * 0.012;
+            logOdds += (thickness - 23) * 0.005;
+            logOdds += (bmi - 25) * 0.15;       // 비만 지표 영향력 상승
+            logOdds += pedigree * 1.5;          // 가족력 중요도 상승
+            logOdds += (age - 25) * 0.02;
+            
+            // 파생 변수 반영 가중치
+            logOdds += (bmiAgeProduct - 800) * 0.0015;
+            logOdds += pregnanciesAgeRatio * 0.4;
+
+            const probability = 1 / (1 + Math.exp(-logOdds));
+            const probPercent = (probability * 100).toFixed(1);
+
+            // 4. 결과 바인딩 및 UI 노출
+            const resultCard = document.getElementById('resultCard');
+            const probabilityText = document.getElementById('probabilityText');
+            const interpretationText = document.getElementById('interpretationText');
+            const statusDot = document.getElementById('statusDot');
+
+            resultCard.classList.remove('hidden');
+            probabilityText.innerText = `${probPercent}%`;
+
+            if (probPercent < 35) {
+                statusDot.className = "w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse";
+                probabilityText.className = "text-green-500 font-bold text-3xl";
+                interpretationText.innerHTML = "✨ <b>안정적인 신체 지표 상태입니다.</b> 채혈 검사 없이 분석한 결과, 대사 지표 및 신체 비율 측면에서 당뇨 위험성이 매우 낮은 범주에 속해있습니다. 지속적인 활동량을 유지해 주세요.";
+            } else if (probPercent < 65) {
+                statusDot.className = "w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse";
+                probabilityText.className = "text-[#ff4d7d] font-bold text-3xl"; // 분홍색 포인트
+                interpretationText.innerHTML = "⚠️ <b>대사 가중치 관리가 필요한 경계선입니다.</b> 나이 대비 비만도(BMI)의 복합 작용으로 인해 경계 경보가 활성화되었습니다. 생활 속 식이조절 및 체중 조절을 권장합니다.";
+            } else {
+                statusDot.className = "w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse";
+                probabilityText.className = "text-red-500 font-bold text-3xl";
+                interpretationText.innerHTML = "🚨 <b>위험 신호 감지 (정밀 진단 추천).</b> 비침습적 신체 점수(체질량 지수와 가족력 등)의 조합이 당뇨 고위험 영역에 머무르고 있습니다. 내과 등에 내원하여 공복 혈당과 당화혈색소(HbA1c) 채혈 검사를 받아보실 것을 권장합니다.";
+            }
+
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
