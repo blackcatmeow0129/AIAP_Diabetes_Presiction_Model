@@ -2,18 +2,19 @@
 : 이 프로젝트는 당뇨병 환자 데이터를 바탕으로 머신러닝 모델을 구축하고, 사용자가 입력한 신체 지표에 따라 당뇨 위험도를 실시간으로 예측해 주는 웹 인터페이스를 구현한 토탈 프로젝트입니다.
 
 # Pipeline
-📂 AIAP_Diabetes_Prediction_Model
-├── 📂 data/
-│   └── diabetes.csv                # 학습 및 테스트에 사용된 당뇨병 데이터셋
-├── 📂 notebooks/
-│   ├── AIAP_final1.ipynb           # 1단계: 데이터 전처리 및 탐색적 데이터 분석(EDA)
-│   ├── AIAP_final2.ipynb           # 2단계: 특성 공학(Feature Engineering) 및 기본 모델링
-│   ├── AIAP_final3.ipynb           # 3단계: 모델 튜닝 및 하이퍼파라미터 최적화
-│   └── AIAP_final4.ipynb           # 4단계: 최종 모델 결정 및 성능 평가
-├── 📂 web/
-│   ├── index-dark.html             # 웹 구현 1 (모델3의 다크모드 UI)
-│   └── index-light.html            # 웹 구현 2 (비침습 당뇨 예측 라이트모드 UI)
-└── 📄 README.md                    # 프로젝트 소개 및 설명 문서 (메인 화면)
+
+📂 AIAP_Diabetes_Prediction_Model  
+├── 📂 data/    
+│   └── diabetes.csv                # 학습 및 테스트에 사용된 당뇨병 데이터셋  
+├── 📂 notebooks/  
+│   ├── AIAP_final1.ipynb           # 1단계: 데이터 전처리 및 탐색적 데이터 분석(EDA)  
+│   ├── AIAP_final2.ipynb           # 2단계: 특성 공학(Feature Engineering) 및 기본 모델링  
+│   ├── AIAP_final3.ipynb           # 3단계: 모델 튜닝 및 하이퍼파라미터 최적화  
+│   └── AIAP_final4.ipynb           # 4단계: 최종 모델 결정 및 성능 평가  
+├── 📂 web/  
+│   ├── index-dark.html             # 웹 구현 1 (토스 스타일 다크모드 UI)  
+│   └── index-light.html            # 웹 구현 2 (비침습 당뇨 예측 라이트모드 UI)  
+└── 📄 README.md                    # 프로젝트 소개 및 설명 문서 (메인 화면)  
 
 
 ## ⚙️ 분석 및 모델링 프로세스 (Pipeline)
