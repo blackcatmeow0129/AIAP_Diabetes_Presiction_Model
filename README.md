@@ -10,10 +10,10 @@
 │   ├── AIAP_final1.ipynb           # 1단계: 데이터 전처리 및 탐색적 데이터 분석(EDA)  
 │   ├── AIAP_final2.ipynb           # 2단계: 특성 공학(Feature Engineering) 및 기본 모델링  
 │   ├── AIAP_final3.ipynb           # 3단계: 모델 튜닝 및 하이퍼파라미터 최적화  
-│   └── AIAP_final4.ipynb           # 4단계: 최종 모델 결정 및 성능 평가  
+│   └── AIAP_final4.ipynb           # 4단계: 비침습모델   
 ├── 📂 web/  
-│   ├── index-dark.html             # 웹 구현 1 (토스 스타일 다크모드 UI)  
-│   └── index-light.html            # 웹 구현 2 (비침습 당뇨 예측 라이트모드 UI)  
+│   ├── index-dark.html             # 웹 구현 1 (모델3 웹 구현_스타일 다크모드 UI)  
+│   └── index-light.html            # 웹 구현 2 (모델4 웹 구현_비침습 당뇨 예측 라이트모드 UI)  
 └── 📄 README.md                    # 프로젝트 소개 및 설명 문서 (메인 화면)  
 
 
